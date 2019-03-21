@@ -1,0 +1,31 @@
+
+Assign 2
+1)list no. of employees count under each manager->
+>>select e1.firstName,count(*) from employees e1,employees e2 where e1.employeeNumber = e2.reportsTo Group By e2.reportsTo;
+
+2)list customer wise unique products ordered->
+select  productName,
+ customerName from products p, customers c, orders o, orderdetails ord 
+ where c.customerNumber=o.customerNumber 
+ and o.orderNumber=ord.orderNumber 
+ and ord.ProductCode=p.productCode 
+ group by  p.productName,c.customerName;
+
+3)list product wise total order amount->
+select sum(ord.quantityOrdered), p.productName 
+ from payments pay, products p, customers c, orders o, orderdetails ord 
+ where c.customerNumber=o.customerNumber 
+ and o.orderNumber=ord.orderNumber 
+ and ord.ProductCode=p.productCode 
+ and c.customerNumber=pay.customerNumber
+  group by p.productName;
+
+4)
+select e1.firstName,SUM(quantityOrdered * priceEach) as total from employees e1,employees e2,orderdetails as o where 
+e1.employeeNumber = e2.reportsTo Group By e2.reportsTo ,o.orderNumber;
+
+5)List month wise no of orders placed for each productLine
+>>select MONTH(o.orderDate),sum(od.quantityOrdered),p.productLine from products as p ,orders as o,orderdetails as od where
+ o.orderNumber = od.orderNumber
+ and od.productCode = p.productCode 
+Group By MONTH(o.orderDate),p.productName,p.productLine ;
